@@ -31,6 +31,9 @@
         const formData = new FormData(form);
         const title = formData.get('title');
         const rating = formData.get('rating');
+        // console.log(formData);
+        // console.log(title);
+        // console.log(rating);
 
         // Make POST request with form data
         fetch('/movies', {
@@ -48,7 +51,7 @@
         form.reset();
     });
 
-    const url = ' https://codeup-json-server.glitch.me/movies';
+    const url = ' https://stump-nice-addition.glitch.me/movies';
 
     // Display loading message
     const loadingMsg = document.getElementById('loading');
@@ -60,12 +63,22 @@
         fetch(url)
             .then(response => response.json())
             .then(movies => {
+                console.log(movies);
+                //Filter movies with title
+                const moviesWithTitle = movies.filter(movie => movie.title !== undefined && movie.title !== '');
+                console.log(moviesWithTitle);
+                //Filter Duplicate Movies
+                const filteredMovies = moviesWithTitle.filter((movies, index, self) =>
+                    self.findIndex((t) => t.title === movies.title) === index
+                );
+                console.log(filteredMovies);
                 // Generate HTML from JSON response
-                const moviesHtml = movies.map(movie => {
+                const moviesHtml = filteredMovies.map(movie => {
                     return `
                     <div>
-                        <h2>${movie.title}</h2>
-                        <p>${movie.plot}</p>
+                        <h2>Title: ${movie.title}</h2>
+                        <p>Genre: ${movie.genre}</p>
+                        <p>Rating: ${movie.rating}</p>
                     </div>
                 `;
                 }).join('');
