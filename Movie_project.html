@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movies</title>
+</head>
+<body>
+
+<!--form for adding movies -->
+<form id="add-movie-form">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title">
+
+    <label for="rating">Rating:</label>
+    <input type="number" id="rating" name="rating" min="1" max="5">
+
+    <button type="submit">Add Movie</button>
+</form>
+
+<!--DIV for loading and movies data-->
+<div id="loading">Loading...</div>
+<div id="movies"></div>
+
+<script>
+    const form = document.getElementById('add-movie-form');
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault(); // Prevent page refresh
+
+        // Get form data
+        const formData = new FormData(form);
+        const title = formData.get('title');
+        const rating = formData.get('rating');
+
+        // Make POST request with form data
+        fetch('/movies', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ title, rating })
+        })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error(error));
+
+        // Clear form fields
+        form.reset();
+    });
+
+    const url = ' https://codeup-json-server.glitch.me/movies';
+
+    // Display loading message
+    const loadingMsg = document.getElementById('loading');
+    loadingMsg.style.display = 'block';
+
+    // Remove loading message after a delay and then fetch movies
+    setTimeout(function() {
+        // Make AJAX request to get movie listings
+        fetch(url)
+            .then(response => response.json())
+            .then(movies => {
+                // Generate HTML from JSON response
+                const moviesHtml = movies.map(movie => {
+                    return `
+                    <div>
+                        <h2>${movie.title}</h2>
+                        <p>${movie.plot}</p>
+                    </div>
+                `;
+                }).join('');
+
+                // Add movies HTML to the page
+                const moviesContainer = document.getElementById('movies');
+                moviesContainer.innerHTML = moviesHtml;
+            })
+
+            .finally(() => {
+                // remove loading...
+                loadingMsg.style.display = 'none';
+            });
+    }, 2000);
+</script>
+
+</body>
+</html>
+
+
+<!--IF ERROR LOADING PAGE PUT THIS IN ABOVE .finally-->
+<!--.catch(error => {-->
+<!--// Handle any errors that occur during the AJAX request-->
+<!--console.error(error);-->
+<!--loadingMsg.innerHTML = 'An error occurred while loading the movies.';-->
+<!--})-->
+
+
+
