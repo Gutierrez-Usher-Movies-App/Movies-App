@@ -168,7 +168,7 @@
         form.reset();
     });
 
-    const url = 'https://stump-nice-addition.glitch.me/movies';
+    const url = 'http://localhost:3000/movies';
 
 
 
@@ -192,7 +192,7 @@
                     return `
                     <div id="movies1">
                         <button id="deleteMovie">X</button>
-                        <h2>Title: ${movie.title}</h2>
+                        <h2>${movie.title}</h2>
                         <p>Genre: ${movie.genre}</p>
                         <p>Rating: ${movie.rating}</p>
                         <button id="editMovie">Edit</button>
