@@ -30,6 +30,19 @@
             flex-wrap: wrap;
             justify-content: space-around;
         }
+        #deleteMovie{
+            display: flex;
+            flex-direction: column;
+            align-self: flex-start ;
+
+        }
+        #editMovie{
+            display: flex;
+            flex-direction: column;
+            align-self: flex-end;
+            justify-content: flex-start;
+
+        }
         .navbar-brand{
             display: flex;
             align-items: center;
@@ -144,6 +157,7 @@
                     <button id="deleteMovie">X</button>
                     <h2>Title: ${data.title}</h2>
                     <p>Rating: ${data.rating}</p>
+                    <button id="editMovie">Edit</button>
                 </div>
             `;
                 // Append the new HTML element to the existing list of movies
@@ -181,6 +195,7 @@
                         <h2>Title: ${movie.title}</h2>
                         <p>Genre: ${movie.genre}</p>
                         <p>Rating: ${movie.rating}</p>
+                        <button id="editMovie">Edit</button>
                     </div>
                 `;
                 });
