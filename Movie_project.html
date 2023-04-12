@@ -105,9 +105,6 @@
         const formData = new FormData(form);
         const title = formData.get('title');
         const rating = formData.get('rating');
-        // console.log(formData);
-        // console.log(title);
-        // console.log(rating);
 
         // Make POST request with form data
         fetch(url, {
@@ -119,11 +116,15 @@
         })
             .then(response => response.json())
             .then(data => {
-                // Display the form data in the div element
-                formDataElement.innerHTML = `
-                <p>Title: ${data.title}</p>
-                <p>Rating: ${data.rating}</p>
+                // Create a new HTML element for the new movie
+                const movieHtml = `
+                <div id="movies1">
+                    <h2>Title: ${data.title}</h2>
+                    <p>Rating: ${data.rating}</p>
+                </div>
             `;
+                // Append the new HTML element to the existing list of movies
+                formDataElement.insertAdjacentHTML('beforeend', movieHtml);
             })
             .catch(error => console.error(error));
         // Clear form fields
@@ -131,6 +132,12 @@
     });
 
     const url = ' https://stump-nice-addition.glitch.me/movies';
+
+
+
+
+
+
 
     // Display loading message
     const loadingMsg = document.getElementById('loading');
