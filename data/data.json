@@ -20,21 +20,9 @@
     },
     {
       "title": "Hot Rod",
-      "rating": "romance",
+      "rating": "4",
       "genre": "comedy",
       "id": 4
-    },
-    {
-      "title": "",
-      "rating": "drama",
-      "genre": "action",
-      "id": 5
-    },
-    {
-      "title": "",
-      "rating": "1",
-      "genre": "action",
-      "id": 6
     }
   ]
 }
