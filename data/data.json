@@ -4,6 +4,11 @@
       "id": 1,
       "title": "Shrek",
       "rating": 5
+    },
+    {
+      "title": "Shrek 2",
+      "rating": "5",
+      "id": 2
     }
   ]
 }

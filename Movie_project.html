@@ -114,7 +114,6 @@
     const loadingMsg = document.getElementById('loading');
     loadingMsg.style.display = 'block';
 
-
     const form = document.getElementById('add-movie-form');
     const formDataElement = document.getElementById('movies');
 
@@ -133,12 +132,68 @@
         }
     });
 
+    // function getElementById("movies") {
+    //
+    // }
+    // Edit an existing movie when Edit button is clicked
+    formDataElement.addEventListener('click', (event) => {
+        if (event.target.id === 'editMovie') {
+            const movieDiv = event.target.parentNode;
+            const title = movieDiv.querySelector('h2').innerText.slice(7);
+            const rating = movieDiv.querySelector('p').innerText.slice(8);
+
+            // Create a pre-populated form for editing the movie
+            // Replace the movie HTML element with the edit form
+            movieDiv.innerHTML = `
+        <form id="edit-movie-form">
+            <label for="edit-title">Title:</label>
+            <input type="text" id="edit-title" name="title" value="${title}">
+
+            <label for="edit-rating">Rating:</label>
+            <input type="number" id="edit-rating" name="rating" min="1" max="5" value="${rating}">
+
+            <button type="submit">Save Changes</button>
+        </form>
+        `;
+
+            // Submit the edit form when Save Changes button is clicked
+            const editForm = movieDiv.querySelector('#edit-movie-form');
+            editForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                const newTitle = editForm.querySelector('#edit-title').value;
+                const newRating = editForm.querySelector('#edit-rating').value;
+
+                fetch(`${url}/title/${title}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title: newTitle, rating: newRating })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Replace the edit form with the updated movie HTML element
+                        movieDiv.innerHTML = `
+                    <h2>Title: ${newTitle}</h2>
+                    <p>Rating: ${newRating}</p>
+                    <button id="editMovie">Edit</button>
+                    <button id="deleteMovie">Delete</button>
+                    `;
+                    })
+                    .catch(error => console.error(error));
+            });
+        }
+    });
+
     // Add a new movie
     form.addEventListener('submit', async (event) => {
         event.preventDefault(); // Prevent page refresh
         // Get form data
         const formData = new FormData(form);
+
+
+
         const title = formData.get('title');
+
         const rating = formData.get('rating');
 
         // Make POST request with form data
@@ -151,6 +206,8 @@
         })
             .then(response => response.json())
             .then(data => {
+
+
                 // Create a new HTML element for the new movie
                 const movieHtml = `
                 <div id="movies1">
@@ -173,7 +230,7 @@
 
 
     // Remove loading message after a delay and then fetch movies
-    setTimeout(function (elementId) {
+    setTimeout(function (element) {
         // Make AJAX request to get movie listings
         fetch(url)
             .then(response => response.json())
@@ -192,9 +249,9 @@
                     return `
                     <div id="movies1">
                         <button id="deleteMovie">X</button>
-                        <h2>${movie.title}</h2>
+                        <h2>Title: ${movie.title}</h2>
+                         <p>Rating: ${movie.rating}</p>
                         <p>Genre: ${movie.genre}</p>
-                        <p>Rating: ${movie.rating}</p>
                         <button id="editMovie">Edit</button>
                     </div>
                 `;
@@ -203,7 +260,7 @@
                 loadingMsg.style.display = 'none';
                 formDataElement.insertAdjacentHTML('beforeend', moviesHtml.join(''));
             })
-            .catch(error => console.error(error));
+
     }, 3000);
 </script>
 
