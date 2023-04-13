@@ -95,6 +95,10 @@
             <label for="rating">Rating:</label>
             <input type="number" id="rating" name="rating" min="1" max="5">
 
+
+            <label for="genre">Genre:</label>
+            <input type="text" id="genre" name="genre">
+
             <button type="submit">Add Movie</button>
 
         </form>
@@ -141,6 +145,7 @@
             const movieDiv = event.target.parentNode;
             const title = movieDiv.querySelector('h2').innerText.slice(7);
             const rating = movieDiv.querySelector('p').innerText.slice(8);
+            const genre = movieDiv.querySelector('p').innerText.slice(8);
 
             // Create a pre-populated form for editing the movie
             // Replace the movie HTML element with the edit form
@@ -151,6 +156,9 @@
 
             <label for="edit-rating">Rating:</label>
             <input type="number" id="edit-rating" name="rating" min="1" max="5" value="${rating}">
+
+            <label for="edit-genre">Genre:</label>
+            <input type="text" id="edit-genre" name="genre" value="${genre}">
 
             <button type="submit">Save Changes</button>
         </form>
@@ -163,11 +171,12 @@
 
                 const newTitle = editForm.querySelector('#edit-title').value;
                 const newRating = editForm.querySelector('#edit-rating').value;
+                const newGenre = editForm.querySelector('#edit-genre').value;
 
                 fetch(`${url}/title/${title}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ title: newTitle, rating: newRating })
+                    body: JSON.stringify({ title: newTitle, rating: newRating, genre: newGenre})
                 })
                     .then(response => response.json())
                     .then(data => {
@@ -175,6 +184,7 @@
                         movieDiv.innerHTML = `
                     <h2>Title: ${newTitle}</h2>
                     <p>Rating: ${newRating}</p>
+                    <p>Genre: ${newGenre}</p>
                     <button id="editMovie">Edit</button>
                     <button id="deleteMovie">Delete</button>
                     `;
@@ -214,6 +224,7 @@
                     <button id="deleteMovie">X</button>
                     <h2>Title: ${data.title}</h2>
                     <p>Rating: ${data.rating}</p>
+                    <p>Genre: ${data.genre}</p>
                     <button id="editMovie">Edit</button>
                 </div>
             `;

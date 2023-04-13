@@ -3,12 +3,19 @@
     {
       "id": 1,
       "title": "Shrek",
-      "rating": 5
+      "rating": 5,
+      "genre": "family"
     },
     {
+      "id": 2,
       "title": "Shrek 2",
       "rating": "5",
-      "id": 2
+      "genre": "family"
+    },
+    {
+      "title": "Shrek 3",
+      "rating": "5",
+      "id": 3
     }
   ]
 }
