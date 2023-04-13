@@ -47,6 +47,11 @@
             display: flex;
             align-items: center;
         }
+        .navbar{
+            display: flex;
+            justify-content: space-between;
+        }
+
         #nav-image{
             border-radius: 10px;
         }
@@ -54,12 +59,25 @@
             display: flex;
             justify-content: center;
         }
+        .rating{
+            color: white;
+        }
         #rating{
             width: 100px;
+        }
+        .title{
+            color: white;
         }
         #title{
             width: 140px;
         }
+        .genre{
+            color: white;
+        }
+        #genre{
+            width: 100px
+        }
+
         button{
             display: flex;
             background: #dc3444;
@@ -87,27 +105,46 @@
         <img id="nav-image" src="https://images.squarespace-cdn.com/content/v1/52543982e4b0f3efcbd5741e/1546995733891-5O18Y986WTMDR3D4FH11/Popcorn.gifg" alt="Logo" width="90" height="74" class="d-inline-block align-text-top">
         MOVIE WAREHOUSE
         </a>
+
+
         <!--form for adding movies -->
-        <form  id="add-movie-form" class="d-flex" role="search">
+
+        <form  id="add-movie-form" class="d-flex title" role="search">
             <label for="title">Title:</label>
             <input type="text" id="title" name="title">
 
-            <label for="rating">Rating:</label>
-            <input type="number" id="rating" name="rating" min="1" max="5">
+            <label for="rating" class="rating">Rating:</label>
+            <select id="rating" name="rating">
+                <option value="action">1</option>
+                <option value="comedy">2</option>
+                <option value="drama">3</option>
+                <option value="horror">4</option>
+                <option value="romance">5</option>
+            </select>
 
 
-            <label for="genre">Genre:</label>
-            <input type="text" id="genre" name="genre">
+            <label for="genre" class="genre">Genre:</label>
+            <select id="genre" name="genre">
+                <option value="action">Action</option>
+                <option value="comedy">Comedy</option>
+                <option value="drama">Drama</option>
+                <option value="horror">Horror</option>
+                <option value="romance">Romance</option>
+                <option value="sci-fi">Science Fiction</option>
+                <option value="thriller">Thriller</option>
+            </select>
+
 
             <button type="submit">Add Movie</button>
 
         </form>
+
     </div>
 </nav>
 
 
 <!--DIV for loading image and movies data-->
-<div id="loading">Loading...</div>
+<div id="loading"></div>
 <br>
 <div id="movies"></div>
 
@@ -206,13 +243,15 @@
 
         const rating = formData.get('rating');
 
+        const genre = formData.get('genre');
+
         // Make POST request with form data
         fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ title, rating })
+            body: JSON.stringify({ title, rating, genre })
         })
             .then(response => response.json())
             .then(data => {
@@ -272,7 +311,7 @@
                 formDataElement.insertAdjacentHTML('beforeend', moviesHtml.join(''));
             })
 
-    }, 3000);
+    }, 1000);
 </script>
 
 
