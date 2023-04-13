@@ -13,21 +13,28 @@
       "genre": "family"
     },
     {
+      "id": 3,
       "title": "Shrek 3",
       "rating": "5",
-      "id": 3
+      "genre": "family"
     },
     {
-      "title": "",
-      "rating": "1",
-      "genre": "action",
+      "title": "Hot Rod",
+      "rating": "romance",
+      "genre": "comedy",
       "id": 4
     },
     {
       "title": "",
-      "rating": "1",
+      "rating": "drama",
       "genre": "action",
       "id": 5
+    },
+    {
+      "title": "",
+      "rating": "1",
+      "genre": "action",
+      "id": 6
     }
   ]
 }

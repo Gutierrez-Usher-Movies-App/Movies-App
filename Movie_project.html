@@ -115,11 +115,11 @@
 
             <label for="rating" class="rating">Rating:</label>
             <select id="rating" name="rating">
-                <option value="action">1</option>
-                <option value="comedy">2</option>
-                <option value="drama">3</option>
-                <option value="horror">4</option>
-                <option value="romance">5</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
             </select>
 
 
@@ -133,8 +133,6 @@
                 <option value="sci-fi">Science Fiction</option>
                 <option value="thriller">Thriller</option>
             </select>
-
-
             <button type="submit">Add Movie</button>
 
         </form>
@@ -148,6 +146,15 @@
 <br>
 <div id="movies"></div>
 
+
+<form id="sort-movies-form">
+    <label for="sort-by">Sort by:</label>
+    <select id="sort-by" name="sort-by">
+        <option value="title">Title</option>
+        <option value="rating">Rating</option>
+        <option value="genre">Genre</option>
+    </select>
+</form>
 
 <!--JAVASCRIPT HERE-->
 <script>
@@ -173,9 +180,7 @@
         }
     });
 
-    // function getElementById("movies") {
-    //
-    // }
+
     // Edit an existing movie when Edit button is clicked
     formDataElement.addEventListener('click', (event) => {
         if (event.target.id === 'editMovie') {
@@ -264,7 +269,6 @@
                     <h2>Title: ${data.title}</h2>
                     <p>Rating: ${data.rating}</p>
                     <p>Genre: ${data.genre}</p>
-                    <button id="editMovie">Edit</button>
                 </div>
             `;
                 // Append the new HTML element to the existing list of movies
@@ -312,6 +316,28 @@
             })
 
     }, 1000);
+
+    // Get the sort-by dropdown element
+    const sortDropdown = document.getElementById('sort-by');
+
+    // Add an event listener to the dropdown
+    sortDropdown.addEventListener('change', () => {
+        // Get the current value of the dropdown
+        const sortValue = sortDropdown.value;
+
+        // Sort the movie data based on the selected value
+        if (sortValue === 'title') {
+            movieData.sort((a, b) => a.title.localeCompare(b.title));
+        } else if (sortValue === 'rating') {
+            movieData.sort((a, b) => b.rating - a.rating);
+        } else if (sortValue === 'genre') {
+            movieData.sort((a, b) => a.genre.localeCompare(b.genre));
+        }
+
+        // Display the sorted movie data
+        displayMovies(movieData);
+    });
+
 </script>
 
 
