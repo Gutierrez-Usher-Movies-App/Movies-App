@@ -169,10 +169,11 @@
 
     // Delete a movie when X button is clicked
     formDataElement.addEventListener('click', (event) => {
+        console.log("delete event")
         if (event.target.id === 'deleteMovie') {
             const movieDiv = event.target.parentNode;
             const title = movieDiv.querySelector('h2').innerText.slice(7);
-            fetch(`${url}/title/${title}`, { method: 'DELETE' })
+            fetch(`${url}/${5}`, { method: 'DELETE' })
                 .then(response => response.json())
                 .then(data => {
                     // Remove the movie HTML element from the DOM
@@ -305,6 +306,7 @@
                     return `
                     <div id="movies1">
                         <button id="deleteMovie">X</button>
+                        <h2 data-movieId="${movie.id}">${movie.id}</h2>
                         <h2>Title: ${movie.title}</h2>
                          <p>Rating: ${movie.rating}</p>
                         <p>Genre: ${movie.genre}</p>

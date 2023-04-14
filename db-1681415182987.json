@@ -1,0 +1,28 @@
+{
+  "movies": [
+    {
+      "id": 1,
+      "title": "Shrek",
+      "rating": 5,
+      "genre": "family"
+    },
+    {
+      "id": 2,
+      "title": "Shrek 2",
+      "rating": "5",
+      "genre": "family"
+    },
+    {
+      "id": 3,
+      "title": "Shrek 3",
+      "rating": "5",
+      "genre": "family"
+    },
+    {
+      "title": "Hot Rod",
+      "rating": "4",
+      "genre": "comedy",
+      "id": 4
+    }
+  ]
+}
