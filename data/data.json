@@ -1,28 +1,46 @@
 {
   "movies": [
     {
-      "id": 1,
       "title": "Shrek",
-      "rating": 5,
-      "genre": "family"
-    },
-    {
-      "id": 2,
-      "title": "Shrek 2",
       "rating": "5",
-      "genre": "family"
+      "genre": " Family",
+      "id": 1
     },
     {
-      "id": 3,
       "title": "Shrek 3",
       "rating": "5",
-      "genre": "family"
+      "genre": " family",
+      "id": 3
     },
     {
-      "title": "Hot Rod",
+      "title": "Shrek 2",
+      "rating": "3",
+      "genre": "drama",
+      "id": 17
+    },
+    {
+      "title": "2 Fast 2 Furious",
+      "rating": "5",
+      "genre": "action",
+      "id": 18
+    },
+    {
+      "title": "Spider-Man 1",
       "rating": "4",
-      "genre": "comedy",
-      "id": 4
+      "genre": "action",
+      "id": 19
+    },
+    {
+      "title": "Spider-Man 2",
+      "rating": "5",
+      "genre": "action",
+      "id": 20
+    },
+    {
+      "title": "Spider-Man 3",
+      "rating": "1",
+      "genre": "action",
+      "id": 21
     }
   ]
 }
