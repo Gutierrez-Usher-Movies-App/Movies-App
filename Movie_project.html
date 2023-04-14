@@ -20,6 +20,8 @@
             border: black solid 2px;
             border-radius: 10px;
             width: 250px;
+            height: 240px;
+            margin: 10px;
             color: lightgray;
             background-color: rgba(100, 100, 100, 0.5); /* set a semi-transparent white background */
             backdrop-filter: blur(3px); /* apply a blur filter to create the frosted effect */
@@ -29,18 +31,33 @@
             flex-direction: row;
             flex-wrap: wrap;
             justify-content: space-around;
+            color: #fffffc;
+        }
+        #cont{
+            display: flex;
         }
         #deleteMovie{
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-self: flex-start ;
+            background-color: rgba(220, 52, 68, 0.5); /* set a semi-transparent white background */
+            backdrop-filter: blur(3px);
+            border-radius: 8px;
+            margin-right: 170px;
+            margin-top: 2px;
+            font-weight: bolder;
 
         }
         #editMovie{
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            width: auto;
             align-self: flex-end;
-            justify-content: flex-start;
+            justify-content: flex-end;
+            background-color: rgba(220, 52, 68, 0.5); /* set a semi-transparent white background */
+            backdrop-filter: blur(3px);
+            border-radius: 8px;
+            margin-top: 2px;
 
         }
         .navbar-brand{
@@ -82,13 +99,46 @@
             display: flex;
             background: #dc3444;
         }
-        #loading{
+        {
             background-image: url("https://media.tenor.com/k9yAts9ymaIAAAAM/loading-load.gif");
             background-repeat: no-repeat;
             width: 1000px;
             height: 100px;
             float: right;
         }
+        .id-tag{
+            display: none;
+        }
+        .edit-icon{
+            width: 23px;
+            height: 23px;
+        }
+        #sort-movies-form{
+            display: none;
+        }
+        #loading {
+            font-weight: bold;
+            font-family: monospace;
+            font-size: 30px;
+            background:linear-gradient(90deg,#fff 50%,#dc3444 0) right/200% 100%;
+            animation:c1 2s infinite linear;
+        }
+
+        #loading::before {
+            content:"Loading...";
+            color:#0000;
+            padding:0 5px;
+            background:linear-gradient(90deg,#fff 50%,#dc3444 0);
+            -webkit-background-clip:text;
+            background-clip:text;
+            background-size:inherit;
+            background-position: inherit;
+        }
+
+        @keyframes c1{
+            100%{background-position: left}
+        }
+
     </style>
 
 
@@ -115,6 +165,7 @@
 
             <label for="rating" class="rating">Rating:</label>
             <select id="rating" name="rating">
+                <option value="null"></option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -125,13 +176,15 @@
 
             <label for="genre" class="genre">Genre:</label>
             <select id="genre" name="genre">
-                <option value="action">Action</option>
-                <option value="comedy">Comedy</option>
-                <option value="drama">Drama</option>
-                <option value="horror">Horror</option>
-                <option value="romance">Romance</option>
-                <option value="sci-fi">Science Fiction</option>
-                <option value="thriller">Thriller</option>
+                <option value="null"></option>
+                <option value="Action">Action</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Drama">Drama</option>
+                <option value="Family">Family</option>
+                <option value="Horror">Horror</option>
+                <option value="Romance">Romance</option>
+                <option value="Sci-Fi">Science Fiction</option>
+                <option value="Thriller">Thriller</option>
             </select>
             <button type="submit">Add Movie</button>
 
@@ -157,7 +210,8 @@
 
 
 
-
+<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+        crossorigin="anonymous"></script>
 <!--JAVASCRIPT HERE-->
 <script>
     // Display loading message
@@ -172,8 +226,14 @@
         console.log("delete event")
         if (event.target.id === 'deleteMovie') {
             const movieDiv = event.target.parentNode;
+<<<<<<< HEAD
             const title = movieDiv.querySelector('h2').innerText.slice(7);
             fetch(`${url}/${5}`, { method: 'DELETE' })
+=======
+            const id = movieDiv.querySelector('p').innerText.slice(0);
+            console.log(id);
+            fetch(`http://localhost:3000/movies/${id}`, { method: 'DELETE' })
+>>>>>>> 7add7fc23ed0e7a398acac8fc63969669df178b2
                 .then(response => response.json())
                 .then(data => {
                     // Remove the movie HTML element from the DOM
@@ -188,9 +248,11 @@
     formDataElement.addEventListener('click', (event) => {
         if (event.target.id === 'editMovie') {
             const movieDiv = event.target.parentNode;
-            const title = movieDiv.querySelector('h2').innerText.slice(7);
-            const rating = movieDiv.querySelector('p').innerText.slice(8);
-            const genre = movieDiv.querySelector('p').innerText.slice(8);
+            const title = movieDiv.querySelector('h2').innerText.slice(0);
+            const paragraph = movieDiv.getElementsByTagName('p');
+            const idTag = paragraph[0].innerText;
+            const rating = paragraph[1].innerText.slice(8);
+            const genre = paragraph[2].innerText.slice(6);
 
             // Create a pre-populated form for editing the movie
             // Replace the movie HTML element with the edit form
@@ -218,20 +280,21 @@
                 const newRating = editForm.querySelector('#edit-rating').value;
                 const newGenre = editForm.querySelector('#edit-genre').value;
 
-                fetch(`${url}/title/${title}`, {
+                fetch(`http://localhost:3000/movies/${idTag}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ title: newTitle, rating: newRating, genre: newGenre})
+                    body: JSON.stringify({title: newTitle, rating: newRating, genre: newGenre})
                 })
                     .then(response => response.json())
                     .then(data => {
                         // Replace the edit form with the updated movie HTML element
                         movieDiv.innerHTML = `
-                    <h2>Title: ${newTitle}</h2>
+                    <button id="deleteMovie">X</button>
+                    <button id="editMovie"><img src="img/edit.svg" class="edit-icon"></button>
+                    <p class="id-tag">${idTag}</p>
+                    <h2>${newTitle}</h2>
                     <p>Rating: ${newRating}</p>
                     <p>Genre: ${newGenre}</p>
-                    <button id="editMovie">Edit</button>
-                    <button id="deleteMovie">Delete</button>
                     `;
                     })
                     .catch(error => console.error(error));
@@ -269,7 +332,9 @@
                 const movieHtml = `
                 <div id="movies1">
                     <button id="deleteMovie">X</button>
-                    <h2>Title: ${data.title}</h2>
+                    <button id="editMovie"><img src="img/edit.svg" class="edit-icon"></button>
+                    <p class="id-tag">${data.id}</p>
+                    <h2>${data.title}</h2>
                     <p>Rating: ${data.rating}</p>
                     <p>Genre: ${data.genre}</p>
                 </div>
@@ -305,12 +370,20 @@
                 const moviesHtml = filteredMovies.map(movie => {
                     return `
                     <div id="movies1">
+<<<<<<< HEAD
                         <button id="deleteMovie">X</button>
                         <h2 data-movieId="${movie.id}">${movie.id}</h2>
                         <h2>Title: ${movie.title}</h2>
+=======
+                        <div id="cont">
+                            <button id="deleteMovie">X</button>
+                            <button id="editMovie"><img src="img/edit.svg" class="edit-icon"></button>
+                        </div>
+                        <p class="id-tag">${movie.id}</p>
+                        <h2>${movie.title}</h2>
+>>>>>>> 7add7fc23ed0e7a398acac8fc63969669df178b2
                          <p>Rating: ${movie.rating}</p>
                         <p>Genre: ${movie.genre}</p>
-                        <button id="editMovie">Edit</button>
                     </div>
                 `;
                 });
