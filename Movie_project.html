@@ -51,7 +51,12 @@
         #editMovie{
             display: flex;
             flex-direction: row;
-            width: auto;
+            background-image: url("img/edit.svg");
+            width: 27px;
+            height: 27px;
+            background-size: 18px;
+            background-repeat: no-repeat;
+            background-position: center;
             align-self: flex-end;
             justify-content: flex-end;
             background-color: rgba(220, 52, 68, 0.5); /* set a semi-transparent white background */
@@ -99,19 +104,8 @@
             display: flex;
             background: #dc3444;
         }
-        {
-            background-image: url("https://media.tenor.com/k9yAts9ymaIAAAAM/loading-load.gif");
-            background-repeat: no-repeat;
-            width: 1000px;
-            height: 100px;
-            float: right;
-        }
         .id-tag{
             display: none;
-        }
-        .edit-icon{
-            width: 23px;
-            height: 23px;
         }
         #sort-movies-form{
             display: none;
@@ -152,8 +146,8 @@
 <nav class="navbar bg-danger">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
-        <img id="nav-image" src="https://images.squarespace-cdn.com/content/v1/52543982e4b0f3efcbd5741e/1546995733891-5O18Y986WTMDR3D4FH11/Popcorn.gifg" alt="Logo" width="90" height="74" class="d-inline-block align-text-top">
-        MOVIE WAREHOUSE
+            <img id="nav-image" src="https://images.squarespace-cdn.com/content/v1/52543982e4b0f3efcbd5741e/1546995733891-5O18Y986WTMDR3D4FH11/Popcorn.gifg" alt="Logo" width="90" height="74" class="d-inline-block align-text-top">
+            MOVIE WAREHOUSE
         </a>
 
 
@@ -223,17 +217,12 @@
 
     // Delete a movie when X button is clicked
     formDataElement.addEventListener('click', (event) => {
-        console.log("delete event")
         if (event.target.id === 'deleteMovie') {
-            const movieDiv = event.target.parentNode;
-<<<<<<< HEAD
-            const title = movieDiv.querySelector('h2').innerText.slice(7);
-            fetch(`${url}/${5}`, { method: 'DELETE' })
-=======
+            const contDiv = event.target.parentNode;
+            const movieDiv = contDiv.parentNode;
             const id = movieDiv.querySelector('p').innerText.slice(0);
             console.log(id);
             fetch(`http://localhost:3000/movies/${id}`, { method: 'DELETE' })
->>>>>>> 7add7fc23ed0e7a398acac8fc63969669df178b2
                 .then(response => response.json())
                 .then(data => {
                     // Remove the movie HTML element from the DOM
@@ -247,7 +236,8 @@
     // Edit an existing movie when Edit button is clicked
     formDataElement.addEventListener('click', (event) => {
         if (event.target.id === 'editMovie') {
-            const movieDiv = event.target.parentNode;
+            const contDiv = event.target.parentNode;
+            const movieDiv = contDiv.parentNode;
             const title = movieDiv.querySelector('h2').innerText.slice(0);
             const paragraph = movieDiv.getElementsByTagName('p');
             const idTag = paragraph[0].innerText;
@@ -289,8 +279,10 @@
                     .then(data => {
                         // Replace the edit form with the updated movie HTML element
                         movieDiv.innerHTML = `
-                    <button id="deleteMovie">X</button>
-                    <button id="editMovie"><img src="img/edit.svg" class="edit-icon"></button>
+                    <div id="cont">
+                        <button id="deleteMovie">X</button>
+                        <button id="editMovie"></button>
+                    </div>
                     <p class="id-tag">${idTag}</p>
                     <h2>${newTitle}</h2>
                     <p>Rating: ${newRating}</p>
@@ -331,8 +323,10 @@
                 // Create a new HTML element for the new movie
                 const movieHtml = `
                 <div id="movies1">
-                    <button id="deleteMovie">X</button>
-                    <button id="editMovie"><img src="img/edit.svg" class="edit-icon"></button>
+                    <div id="cont">
+                        <button id="deleteMovie">X</button>
+                        <button id="editMovie"></button>
+                    </div>
                     <p class="id-tag">${data.id}</p>
                     <h2>${data.title}</h2>
                     <p>Rating: ${data.rating}</p>
@@ -370,18 +364,12 @@
                 const moviesHtml = filteredMovies.map(movie => {
                     return `
                     <div id="movies1">
-<<<<<<< HEAD
-                        <button id="deleteMovie">X</button>
-                        <h2 data-movieId="${movie.id}">${movie.id}</h2>
-                        <h2>Title: ${movie.title}</h2>
-=======
                         <div id="cont">
                             <button id="deleteMovie">X</button>
-                            <button id="editMovie"><img src="img/edit.svg" class="edit-icon"></button>
+                            <button id="editMovie"></button>
                         </div>
                         <p class="id-tag">${movie.id}</p>
                         <h2>${movie.title}</h2>
->>>>>>> 7add7fc23ed0e7a398acac8fc63969669df178b2
                          <p>Rating: ${movie.rating}</p>
                         <p>Genre: ${movie.genre}</p>
                     </div>
@@ -431,6 +419,3 @@
 <!--console.error(error);-->
 <!--loadingMsg.innerHTML = 'An error occurred while loading the movies.';-->
 <!--})-->
-
-
-
