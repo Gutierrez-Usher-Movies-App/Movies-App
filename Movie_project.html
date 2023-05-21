@@ -364,15 +364,18 @@
             // Replace the movie HTML element with the edit form
             movieDiv.innerHTML = `
             <form id="edit-movie-form">
+                <br>
                 <label for="edit-title">Title:</label>
                 <input type="text" id="edit-title" name="title" value="${title}">
-
+                <br>
+                <br>
                 <label for="edit-rating">Rating:</label>
                 <input type="number" id="edit-rating" name="rating" min="1" max="5" value="${rating}">
-
+                <br>
+                <br>
                 <label for="edit-genre">Genre:</label>
                 <input type="text" id="edit-genre" name="genre" value="${genre}">
-
+                <br>
                 <button type="submit">Save Changes</button>
             </form>
         `;
